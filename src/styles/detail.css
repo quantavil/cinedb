@@ -1,12 +1,23 @@
 /* detail: full-screen on phone, right panel on desktop */
 .detail {
-  position: fixed;
+  /* a native modal: undo the user-agent box so it fills the viewport */
   inset: 0;
-  z-index: 30;
-  display: flex;
-  flex-direction: column;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  color: inherit;
   background: var(--bg);
   animation: sheet 0.22s var(--ease);
+}
+/* display only when open: setting it unconditionally would defeat the closed state */
+.detail[open] {
+  display: flex;
+  flex-direction: column;
 }
 @media (min-width: 900px) {
   .detail {
@@ -14,9 +25,6 @@
     width: min(520px, 100vw);
     border-left: 1px solid var(--line);
     box-shadow: -24px 0 64px rgb(0 0 0 / 0.4);
-  }
-  .scrim.above {
-    z-index: 29;
   }
 }
 .dh {

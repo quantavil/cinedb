@@ -31,6 +31,7 @@ bunx knip
 - `src/App.tsx`: composition root. `src/hooks.ts`: query/URL state, detail route, pages, toast.
 - `src/List.tsx`: title grid, poster cards. `src/Detail.tsx`: title detail dialog.
 - `src/Toolbar.tsx` (tabs, pills), `src/Facets.tsx` and `src/Sliders.tsx` (popover bodies), `src/Pop.tsx` (card on desktop, bottom sheet on phone), `src/Pager.tsx`.
+- `src/dialog.ts`: `useModal`, the one place a native `<dialog>` is opened (Detail and Pop). Esc, backdrop and focus are the browser's; do not add scrims, `role="dialog"`, focus traps or Esc handlers.
 - `src/search.ts`: uFuzzy, exact words first, typo-tolerant fallback on names only. `src/filter.ts`: query model, filtering, sorting, URL. `src/marks.ts`, `src/settings.ts`: localStorage state.
 - `src/icons.tsx`: every SVG. `src/styles/`: CSS by area, imported from `src/style.css`.
 

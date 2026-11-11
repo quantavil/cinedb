@@ -1,4 +1,15 @@
-/* popover: bottom sheet on phone, card under its pill on desktop */
+/* Native modals (detail, popover): stop scroll gestures chaining to the page behind. ::backdrop is not a
+   scroll container until it has overflow, and without that it ignores overscroll-behavior. */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: rgb(0 0 0 / 0.55);
+}
+
+/* the settings panel's scrim; the dialogs use ::backdrop */
 .scrim {
   position: fixed;
   inset: 0;
@@ -31,7 +42,16 @@
   box-shadow: 0 -12px 40px rgb(0 0 0 / 0.35);
   outline: 0;
 }
-.pop {
+/* a native modal: undo the user-agent box (it pins top: 0 and caps width) so it is a sheet at the bottom */
+dialog.pop {
+  top: auto;
+  width: auto;
+  height: auto;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  color: inherit;
   animation: sheet 0.22s var(--ease);
 }
 @keyframes sheet {
@@ -55,10 +75,10 @@
   margin-top: 16px;
 }
 @media (min-width: 900px) {
-  .scrim.soft {
+  dialog.pop::backdrop {
     background: transparent;
   }
-  .pop {
+  dialog.pop {
     left: var(--x);
     right: auto;
     top: var(--y);

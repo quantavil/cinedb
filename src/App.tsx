@@ -51,8 +51,9 @@ export function App() {
       const el = e.target as HTMLElement;
       const typing = el.tagName === 'INPUT' || el.tagName === 'TEXTAREA';
       if (e.key === 'Escape') {
-        if (openId) detail.close();
-        else if (settingsOpen) setSettingsOpen(false);
+        // A modal dialog (the title, a filter card) takes Esc itself and closes through its own close event.
+        if (el.closest('dialog')) return;
+        if (settingsOpen) setSettingsOpen(false);
         else if (typing) el.blur();
         return;
       }
@@ -69,7 +70,7 @@ export function App() {
     };
     addEventListener('keydown', onKey);
     return () => removeEventListener('keydown', onKey);
-  }, [openId, current, settingsOpen, detail.close, detail.step, toggle]);
+  }, [current, settingsOpen, detail.step, toggle]);
 
   const onImport = async (file: File) => {
     try {
@@ -91,8 +92,8 @@ export function App() {
         titles={all}
         generated={data?.generated ?? ''}
       />
-      {/* inert keeps focus and the screen reader out of the page while a panel covers it */}
-      <main inert={!!current || settingsOpen}>
+      {/* inert keeps focus and the screen reader out of the page while the settings panel covers it; the modal dialogs do this natively */}
+      <main inert={settingsOpen}>
         <header class="masthead">
           <div class="bar">
             <h1 class="brand">

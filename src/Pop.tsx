@@ -1,5 +1,6 @@
 import type { ComponentChildren } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { LIGHT_DISMISS, useModal } from './dialog.ts';
 import { Close } from './icons.tsx';
 
 interface Props {
@@ -14,32 +15,25 @@ interface Props {
 }
 
 /**
- * Shared popover: scrim, Escape, focus in and back out. It is a card under its anchor on desktop and a
- * bottom sheet on phones (CSS decides). Escape is taken in the capture phase so it only closes the
- * topmost layer, never the settings panel underneath.
+ * Shared popover, a native modal dialog: the browser supplies the backdrop, Esc, focus containment and
+ * stacking, so Esc only ever closes the topmost layer. It is a card under its anchor on desktop and a
+ * bottom sheet on phones (CSS decides).
  */
 export function Pop({ anchor, label, width = 360, bare, onClose, children }: Props) {
-  const card = useRef<HTMLDivElement>(null);
+  const card = useRef<HTMLDialogElement>(null);
+  useModal(card, onClose);
   const close = useRef(onClose);
   close.current = onClose;
   // Read during the first render: children focus themselves in their own effects, which run before ours.
   const [opener] = useState(() => document.activeElement);
 
   useEffect(() => {
-    if (!card.current?.contains(document.activeElement)) card.current?.focus({ preventScroll: true });
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return;
-      e.stopPropagation();
-      close.current();
-    };
     // The card is placed from the anchor's rect, which a width change invalidates. Height changes, such as a
     // phone's address bar sliding away, do not.
     const width = innerWidth;
     const onResize = () => innerWidth !== width && close.current();
-    addEventListener('keydown', onKey, true);
     addEventListener('resize', onResize);
     return () => {
-      removeEventListener('keydown', onKey, true);
       removeEventListener('resize', onResize);
       if (opener instanceof HTMLElement && opener.isConnected) opener.focus({ preventScroll: true });
     };
@@ -47,24 +41,20 @@ export function Pop({ anchor, label, width = 360, bare, onClose, children }: Pro
 
   const x = Math.max(8, Math.min(anchor.left, innerWidth - width - 8));
   return (
-    <>
-      <div class="scrim on soft" onClick={onClose} />
-      <div
-        class={bare ? 'pop bare' : 'pop'}
-        ref={card}
-        role="dialog"
-        aria-label={label}
-        tabIndex={-1}
-        style={{ '--x': `${x}px`, '--y': `${anchor.bottom + 8}px`, '--w': `${width}px` }}
-      >
-        <header class="ph">
-          <h3>{label}</h3>
-          <button class="icon sm" onClick={onClose} aria-label="Close">
-            <Close />
-          </button>
-        </header>
-        {children}
-      </div>
-    </>
+    <dialog
+      class={bare ? 'pop bare' : 'pop'}
+      ref={card}
+      aria-label={label}
+      {...LIGHT_DISMISS}
+      style={{ '--x': `${x}px`, '--y': `${anchor.bottom + 8}px`, '--w': `${width}px` }}
+    >
+      <header class="ph">
+        <h3>{label}</h3>
+        <button class="icon sm" onClick={onClose} aria-label="Close">
+          <Close />
+        </button>
+      </header>
+      {children}
+    </dialog>
   );
 }
