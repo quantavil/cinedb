@@ -1,0 +1,235 @@
+/* detail: full-screen on phone, right panel on desktop */
+.detail {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  animation: sheet 0.22s var(--ease);
+}
+@media (min-width: 900px) {
+  .detail {
+    left: auto;
+    width: min(520px, 100vw);
+    border-left: 1px solid var(--line);
+    box-shadow: -24px 0 64px rgb(0 0 0 / 0.4);
+  }
+  .scrim.above {
+    z-index: 29;
+  }
+}
+.dh {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px var(--pad);
+  padding-top: max(10px, env(safe-area-inset-top));
+  border-bottom: 1px solid var(--line);
+}
+.dh-rank {
+  margin: 0 auto;
+  font: 500 16px var(--edge);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.db {
+  flex: 1;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 20px var(--pad) max(28px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+.top {
+  display: flex;
+  gap: 18px;
+  width: 100%;
+}
+.pic {
+  width: min(38%, 200px);
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--bg2);
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 12px 32px rgb(0 0 0 / 0.35);
+  align-self: flex-start;
+}
+.top h2 {
+  margin: 0;
+  font-size: clamp(22px, 5vw, 28px);
+  line-height: 1.15;
+}
+.orig,
+.facts,
+.tags {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 14px;
+}
+.score {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 14px 0 0;
+  color: var(--dim);
+  font-size: 14px;
+}
+.score .num {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 38px/1 var(--edge);
+  color: var(--amber);
+  letter-spacing: 0.02em;
+}
+.score .num svg {
+  width: 26px;
+  height: 26px;
+}
+.acts {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+.acts .btn {
+  flex: 1;
+}
+.plot {
+  margin: 0;
+  max-width: 60ch;
+  line-height: 1.6;
+}
+.crew {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 18px;
+  margin: 0;
+}
+.crew dt {
+  font: 500 14px var(--edge);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding-top: 2px;
+}
+.crew dd {
+  margin: 0;
+}
+.dh-rank small {
+  margin-left: 8px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+.dh-rank .up {
+  color: var(--amber);
+}
+.kws {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.kws button {
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dim);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    color 0.15s,
+    background 0.15s;
+}
+.kws button:hover {
+  border-color: var(--gold);
+  color: var(--fg);
+  background: var(--bg2);
+}
+.kws button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+.tag-btn {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--dim) 35%, transparent);
+  text-underline-offset: 3px;
+  transition:
+    color 0.15s,
+    text-decoration-color 0.15s;
+}
+.tag-btn:hover {
+  color: var(--gold);
+  text-decoration-color: var(--gold);
+}
+.tag-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.role {
+  display: block;
+}
+.role small {
+  color: var(--dim);
+  font-size: inherit;
+}
+.more {
+  width: 100%;
+}
+.more h3 {
+  margin: 0 0 10px;
+  font: 500 14px var(--edge);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.more ul {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0 0 4px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+.more li {
+  flex: none;
+  scroll-snap-align: start;
+}
+.more button {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.more img,
+.more .nopic {
+  display: block;
+  width: 100px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--bg2);
+  box-shadow: 0 0 0 1px var(--line);
+}

@@ -1,0 +1,37 @@
+name: Refresh IMDb data
+on:
+  schedule:
+    - cron: '17 4 * * 2' # Tuesdays
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write # to delete old runs
+concurrency: refresh-data
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+      - uses: oven-sh/setup-bun@v2
+      # The fetcher needs only valibot: skip dev tools and lifecycle scripts (lefthook, Playwright).
+      - run: bun install --frozen-lockfile --production --ignore-scripts
+      - run: bun scripts/fetch.ts
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- data; then echo "no change"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git commit -m "data: weekly refresh"
+          git push
+      - name: Delete runs older than 30 days
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cutoff=$(date -u -d '30 days ago' +%Y-%m-%dT%H:%M:%SZ)
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs?per_page=100&created=<$cutoff" --jq '.workflow_runs[].id' \
+            | xargs -r -P4 -I{} gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/runs/{}"

@@ -1,0 +1,135 @@
+/* header: brand, search, settings; toolbar under it */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background:
+    radial-gradient(480px 140px at 0 0, color-mix(in srgb, var(--gold) 13%, transparent), transparent), var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px var(--pad) 4px;
+  padding-top: max(10px, env(safe-area-inset-top));
+}
+.brand {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font: 600 24px/1 var(--edge);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.brand-name {
+  display: none;
+}
+.logo {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #ffd166, var(--gold) 55%, #d98f00);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--gold) 40%, transparent);
+}
+.logo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 9px;
+  height: 11px;
+  background: var(--ink);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  translate: 1px 0;
+}
+.find {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 44px;
+  padding: 0 12px 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg2);
+  color: var(--dim);
+  transition: border-color 0.15s;
+}
+.find:focus-within {
+  border-color: var(--gold);
+  color: var(--fg);
+}
+.find input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--fg);
+  font-size: 16px;
+}
+.find input::placeholder {
+  color: var(--dim);
+}
+.find input::-webkit-search-cancel-button {
+  display: none;
+}
+.hint {
+  display: none;
+  font: 500 14px var(--edge);
+  border: 1px solid var(--line);
+  padding: 0 7px;
+  color: var(--dim);
+  border-radius: 6px;
+}
+.icon {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg2);
+  flex: none;
+}
+.icon.sm {
+  width: 36px;
+  height: 36px;
+}
+.icon:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+@media (min-width: 900px) {
+  .bar {
+    gap: 10px;
+    padding-bottom: 6px;
+  }
+  .brand {
+    gap: 9px;
+    margin-right: 20px;
+    font-size: 28px;
+  }
+  .brand-name {
+    display: inline;
+  }
+  .find {
+    flex: 0 1 600px;
+    gap: 8px;
+    height: 46px;
+    padding: 0 16px;
+  }
+  .hint {
+    display: inline;
+  }
+  .gear {
+    margin-left: auto;
+  }
+}

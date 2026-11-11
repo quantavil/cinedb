@@ -1,0 +1,172 @@
+/* grid of posters */
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 16px var(--pad) 48px;
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(auto-fill, minmax(var(--cell), 1fr));
+}
+.cell {
+  min-width: 0;
+  /* content-visibility clips paint to the cell, so the cell reaches 12px past the poster to leave room for
+     the lift shadow; the margin cancels the padding and clicks in that margin pass through */
+  padding: 12px;
+  margin: -12px;
+  pointer-events: none;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 250px;
+}
+.cell > * {
+  pointer-events: auto;
+}
+.frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg2);
+  --ring: 0 0 0 1px var(--line);
+  --lift: 0 6px 16px rgb(0 0 0 / 0.32);
+  box-shadow: var(--ring);
+  text-align: left;
+}
+.frame::after {
+  /* scrim so the badges read on any poster */
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: linear-gradient(transparent, rgb(0 0 0 / 0.72));
+  pointer-events: none;
+}
+.frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s;
+}
+.frame:focus-visible {
+  outline-offset: -3px;
+}
+.nopic {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: 10px;
+  text-align: center;
+  color: var(--dim);
+  font-size: 13px;
+}
+.rt {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  color: #fff;
+}
+.rt svg {
+  width: 14px;
+  height: 14px;
+  color: #f5b335;
+  align-self: center;
+  flex-shrink: 0;
+}
+.rt .val {
+  font: 600 18px/1 var(--edge);
+  letter-spacing: 0.03em;
+}
+.rt .vt {
+  font: 500 11px/1 var(--edge);
+  color: rgb(255 255 255 / 0.72);
+  letter-spacing: 0.04em;
+  margin-left: 1px;
+}
+.no {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 1;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.55);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font: 500 13px/1.2 var(--edge);
+  letter-spacing: 0.06em;
+}
+.cell[data-m='w'] .frame {
+  --ring: 0 0 0 2px var(--red);
+}
+.cell[data-m='s'] img {
+  opacity: 0.4;
+  filter: saturate(0.5);
+}
+.mk {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.4);
+}
+.mk svg {
+  width: 15px;
+  height: 15px;
+}
+.cap {
+  margin: 8px 2px 0;
+  display: grid;
+  gap: 1px;
+  line-height: 1.25;
+}
+.tt {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+}
+.yr {
+  font-size: 12.5px;
+  color: var(--dim);
+}
+.cell[data-sel] .tt {
+  color: var(--amber);
+}
+
+.state {
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  padding: 88px var(--pad);
+  color: var(--dim);
+  text-align: center;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 var(--pad) 48px;
+}
+.pager .count {
+  color: var(--dim);
+  font-size: 13px;
+}

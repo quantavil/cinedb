@@ -1,0 +1,132 @@
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/barlow-condensed-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/barlow-condensed-600.woff2') format('woff2');
+}
+
+:root {
+  color-scheme: light dark;
+  /* Warm ink ground (dark) or paper (light); gold is the single accent. */
+  --bg: light-dark(#f6f2e8, #100f0d);
+  --bg2: light-dark(#fffdf7, #1a1815);
+  --bg3: light-dark(#ede7d8, #26231e);
+  --line: light-dark(#ded6c3, #2e2a24);
+  --fg: light-dark(#1b1812, #f2ecdf);
+  --dim: light-dark(#6b6354, #a39a8c);
+  --amber: light-dark(#8a5700, #f5b335); /* accent as text */
+  --gold: light-dark(#f0a912, #f5b335); /* accent as fill */
+  --ink: #1a1200; /* text on gold */
+  --red: light-dark(#c4221d, #ff5a4f); /* only the user's marks */
+  --edge: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --cell: 108px;
+  --gap: 14px 10px;
+  --pad: max(14px, env(safe-area-inset-left));
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  font:
+    16px/1.4 system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  accent-color: var(--gold);
+  caret-color: var(--gold);
+  scrollbar-color: var(--line) transparent;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+:root[data-density='compact'] {
+  --cell: 88px;
+  --gap: 10px 8px;
+}
+:root[data-density='large'] {
+  --cell: 150px;
+  --gap: 18px 12px;
+}
+@media (min-width: 900px) {
+  :root {
+    --cell: 172px;
+    --gap: 24px 16px;
+    --pad: 24px;
+  }
+  :root[data-density='compact'] {
+    --cell: 136px;
+    --gap: 16px 12px;
+  }
+  :root[data-density='large'] {
+    --cell: 224px;
+    --gap: 28px 18px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  background: var(--bg);
+}
+/* A mouse or trackpad overscroll would pull the sticky header away from the top and show the bare page. Touch
+   keeps the browser's own pull-to-refresh, which is the only way to reload the installed app. */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    overscroll-behavior-y: none;
+  }
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100dvh;
+  -webkit-text-size-adjust: 100%;
+}
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+[hidden] {
+  display: none !important;
+}
+.num,
+.no,
+.rt,
+.total {
+  font-variant-numeric: tabular-nums;
+}
+main {
+  min-width: 0;
+  max-width: 1840px;
+  margin: 0 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

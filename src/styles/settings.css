@@ -1,0 +1,47 @@
+/* settings */
+fieldset {
+  margin: 20px 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+legend {
+  padding: 0;
+  margin-bottom: 8px;
+  font: 500 14px var(--edge);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.note {
+  margin: 16px 0 0;
+  color: var(--dim);
+  font-size: 13px;
+}
+fieldset .note {
+  margin: 0 0 8px;
+}
+.foot {
+  color: var(--dim);
+  font-size: 12px;
+  margin: 16px 0 0;
+}
+.settings .fa {
+  margin-top: 20px;
+}
+.settings fieldset .fa {
+  margin-top: 8px;
+}
+
+/* the four default-type chips share one row, however narrow the sheet */
+.settings .chips {
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+.settings .chips .chip {
+  flex: 1 1 auto;
+  padding: 0 8px;
+  white-space: nowrap;
+  font-size: 13px;
+}

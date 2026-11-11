@@ -1,0 +1,11 @@
+# Installed by `bun install` (the prepare script).
+pre-commit:
+  jobs:
+    - name: check
+      run: bun run check
+pre-push:
+  jobs:
+    - name: test
+      run: bun run test
+    - name: build and size
+      run: bun run size

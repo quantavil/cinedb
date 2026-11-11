@@ -1,0 +1,102 @@
+/* toolbar: show tabs, then one pill per facet */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px var(--pad) 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toolbar::-webkit-scrollbar {
+  display: none;
+}
+.tabs {
+  display: flex;
+  flex: none;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg2);
+}
+.tabs button {
+  height: 32px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dim);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.tabs button[aria-pressed='true'] {
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: 600;
+}
+.sep {
+  flex: none;
+  width: 1px;
+  height: 22px;
+  background: var(--line);
+}
+.pill {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 12px 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg2);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.pill svg {
+  opacity: 0.55;
+  transition: transform 0.2s var(--ease);
+}
+.pill[aria-expanded='true'] {
+  border-color: var(--gold);
+}
+.pill[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+.pill.on {
+  border-color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 16%, var(--bg2));
+  font-weight: 600;
+}
+.pill.clear {
+  padding: 0 14px;
+  border-style: dashed;
+  background: transparent;
+  color: var(--dim);
+}
+.total {
+  flex: none;
+  margin-left: auto;
+  padding-left: 12px;
+  font: 500 15px var(--edge);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  white-space: nowrap;
+}
+@media (max-width: 899px) {
+  .total {
+    display: none;
+  }
+  /* Rating and Genre lead the row so they are on screen without scrolling. */
+  .tabs,
+  .sep {
+    order: 1;
+  }
+  .pill {
+    order: 2;
+  }
+  .pill[data-f='rating'],
+  .pill[data-f='genre'] {
+    order: 0;
+  }
+}

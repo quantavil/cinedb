@@ -1,0 +1,8 @@
+[
+  {
+    "name": "critical path (html, js, css)",
+    "path": ["dist/index.html", "dist/assets/index-*.js", "dist/assets/index-*.css"],
+    "limit": "30 kB"
+  },
+  { "name": "data", "path": "dist/assets/titles-*.json", "limit": "1 MB" }
+]

@@ -1,0 +1,128 @@
+/* range slider over a histogram */
+.rs {
+  display: grid;
+  gap: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.rs-read {
+  display: grid;
+  grid-template-columns: 1fr 16px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+.rs-read > div {
+  display: grid;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+}
+.rs-read > div:last-child {
+  text-align: right;
+}
+.rs-read small {
+  font: 500 12px var(--edge);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.rs-read output {
+  font: 600 24px/1 var(--edge);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.rs-read span {
+  height: 1px;
+  background: var(--dim);
+}
+.rs-in {
+  margin: 0 14px;
+}
+.rs-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 64px;
+}
+.rs-bars i {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  background: var(--bg3);
+  transition: background 0.12s;
+}
+.rs-bars i.in {
+  background: color-mix(in srgb, var(--gold) 70%, transparent);
+}
+.rs-track {
+  position: relative;
+  height: 34px;
+  touch-action: none;
+  cursor: pointer;
+}
+.rs-track::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 16px;
+  height: 2px;
+  background: var(--line);
+}
+.rs-track::after {
+  content: '';
+  position: absolute;
+  inset: 0 -14px;
+}
+.rs-band {
+  position: absolute;
+  top: 15px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--gold);
+}
+.rs-thumb {
+  position: absolute;
+  z-index: 1;
+  top: 4px;
+  width: 20px;
+  height: 26px;
+  margin-left: -10px;
+  border: 2px solid var(--gold);
+  border-radius: 7px;
+  background: var(--bg2);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.3);
+  cursor: grab;
+  outline: 0;
+}
+.rs-thumb::before {
+  content: '';
+  position: absolute;
+  inset: 6px 7px;
+  border-inline: 2px solid var(--gold);
+  opacity: 0.8;
+}
+.rs-thumb::after {
+  content: '';
+  position: absolute;
+  inset: -10px -8px;
+}
+.rs-thumb:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 45%, transparent);
+}
+.rs-thumb:active {
+  cursor: grabbing;
+}
+.rs-ticks {
+  position: relative;
+  height: 16px;
+  font: 500 13px var(--edge);
+  letter-spacing: 0.04em;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.rs-ticks span {
+  position: absolute;
+  transform: translateX(-50%);
+}

@@ -1,0 +1,25 @@
+/* Hover and press for every button: it lifts and throws a shadow. Posters add to their own ring (--ring). */
+:root {
+  --lift: 0 2px 6px rgb(0 0 0 / 0.22);
+}
+:is(.btn, .icon, .pill, .chip, .seg button, .tabs button, .select, .frame, .kws button) {
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    border-color 0.15s,
+    background 0.15s,
+    color 0.15s;
+}
+@media (hover: hover) {
+  :is(.btn, .icon, .pill, .chip, .seg button, .tabs button, .select, .frame, .kws button):hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--ring, 0 0 #0000), var(--lift);
+  }
+  .tabs button:hover:not([aria-pressed='true']) {
+    background: var(--bg3);
+    color: var(--fg);
+  }
+}
+:is(.btn, .icon, .pill, .chip, .seg button, .tabs button, .select, .frame, .kws button):active:not(:disabled) {
+  transform: none;
+}
